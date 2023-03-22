@@ -1,15 +1,21 @@
 ---
----
+import Page from "../layouts/Page.astro";
+import { listBucketItems, createPresignedUrlWithClient, getS3Folders } from "../utils/s3";
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+const content = await listBucketItems(import.meta.env.DB_BUCKET);
+const bucketData = getS3Folders(content);
+// const landingImages = bucketData.landing.map(async (key) => {
+// 	const url = await createPresignedUrlWithClient(import.meta.env.DB_BUCKET, `landing/${key}`);
+// 	return url
+// });
+---
+<Page title="Home">
+	<main class="p-5">
+		{
+			bucketData.folders.map(folder => <p>{folder}</p>)
+		}
+	</main>
+</Page>
+<script>
+	import gsap from 'gsap';
+</script>

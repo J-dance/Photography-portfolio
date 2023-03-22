@@ -1,0 +1,36 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  content?: string;
+};
+
+const { 
+  title, 
+  description = "Jojo Dance photography portfolio website. Custom website build and content produced by J-Dance",
+  content = "Astro.js, TypeScript, React, Tailwind, AWS, Photography portfolio"
+  } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="application-name" content="J-dance photography portfolio with Astro.js">
+  <meta name="description" content={description}>
+  <meta name="keywords" content={content}>
+  <meta name="author" content="J-dance">
+  <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.svg">
+</head>
+<body class="w-full bg-black text-white px-12 pt-12">
+  <!-- nav -->
+  <slot>
+    <h2 class="text-center">Oops, no child for this slot</h2>
+  </slot>
+  <!-- footer -->
+</body>
+</html>
