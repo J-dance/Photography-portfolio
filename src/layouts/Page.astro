@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 interface Props {
   title: string;
   description?: string;
@@ -25,7 +27,6 @@ const {
   <title>{title}</title>
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <link rel="icon" type="image/x-icon" href="/favicon.svg">
-  <link rel="stylesheet" href="src/styles/global.css">
 </head>
 <!-- remove overflow-hidden on load (index.astro) -->
 <body class="w-full min-h-screen overflow-hidden bg-black text-white relative">

@@ -1,7 +1,11 @@
 /* global styles in here */
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+body::-webkit-scrollbar {
+  background-color: black;
+  width: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 3px;
 }

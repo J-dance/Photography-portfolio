@@ -2,11 +2,7 @@ import {
   S3Client,
   // This command supersedes the ListObjectsCommand and is the recommended way to list objects.
   ListObjectsV2Command,
-  GetObjectCommand
 } from "@aws-sdk/client-s3";
-import {
-  getSignedUrl,
-} from "@aws-sdk/s3-request-presigner";
 
 // intialise client using IAM
 const client = new S3Client({
@@ -42,17 +38,16 @@ export const listBucketItems = async (bucketName: string) => {
   }
 };
 
-export const createPresignedUrlWithClient = async ( bucket: string, key: string ) => {
-  const command = new GetObjectCommand({ Bucket: bucket, Key: key });
-  return getSignedUrl(client, command, { expiresIn: 3600 });
-};
+const createImgUrl = (key: string) => {
+  return `https://${import.meta.env.DB_BUCKET}.s3.${import.meta.env.DB_REGION}.amazonaws.com/${key}`
+}
 
 export interface FolderData {
   folders: string[]
   [key: string]: string[]
 }
 
-export const getS3Folders = (list: string[]) => {
+export const getS3Data = (list: string[]) => {
   let data: FolderData = {
     folders: []
     // add folders as dynamic keys
@@ -64,9 +59,9 @@ export const getS3Folders = (list: string[]) => {
     if (itemArr[1] !== '') {
       // files
       if (data[itemArr[0]] === undefined) {
-        data[itemArr[0]] = [itemArr[1]];
+        data[itemArr[0]] = [createImgUrl(item)];
       } else {
-        data[itemArr[0]].push(itemArr[1]);
+        data[itemArr[0]].push(createImgUrl(item));
       }
     } else if (itemArr[1] === '') {
       // folder
