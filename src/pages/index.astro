@@ -1,21 +1,44 @@
 ---
+import LoaderScreen from "../components/LoaderScreen.astro";
 import Page from "../layouts/Page.astro";
-import { listBucketItems, createPresignedUrlWithClient, getS3Folders } from "../utils/s3";
+import { listBucketItems, createPresignedUrlWithClient, getS3Folders, FolderData } from "../utils/s3";
 
-const content = await listBucketItems(import.meta.env.DB_BUCKET);
-const bucketData = getS3Folders(content);
-// const landingImages = bucketData.landing.map(async (key) => {
-// 	const url = await createPresignedUrlWithClient(import.meta.env.DB_BUCKET, `landing/${key}`);
-// 	return url
-// });
+const content = await listBucketItems(import.meta.env.DB_BUCKET);	// all image data
+const bucketData: FolderData = getS3Folders(content);	// format data
+const landingImagesPromise = bucketData.landing.map(async (key) => {
+	return await createPresignedUrlWithClient(import.meta.env.DB_BUCKET, `landing/${key}`);
+});
+const landingImages = await Promise.all(landingImagesPromise);
+
 ---
 <Page title="Home">
-	<main class="p-5">
+	<div class="loader-container absolute w-full h-screen left-0 top-0 bg-white">
+		<LoaderScreen />
+	</div>
+	<main id="landing-content" class="w-full">
 		{
-			bucketData.folders.map(folder => <p>{folder}</p>)
+			landingImages.map((imgSrc) => <img class="w-full h-auto" src={imgSrc} alt="landing" />)
 		}
 	</main>
 </Page>
 <script>
 	import gsap from 'gsap';
+	let loaderTl = gsap.timeline({});
+	loaderTl
+		.to(".loader-container", {opacity: 0, duration: 1})
+		.to(".loader-container", {display: 'none'}, 2)
+		.to("body", {overflow: 'auto'}, 2)
+		.pause();
+
+	window.addEventListener('load', () => {
+		loaderTl.resume();
+	})
 </script>
+
+<!-- 
+	To do:
+
+	- cache img urls on server
+	- use imagesloaded fo splash screen
+
+-->

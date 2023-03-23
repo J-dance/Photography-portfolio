@@ -25,8 +25,10 @@ const {
   <title>{title}</title>
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <link rel="icon" type="image/x-icon" href="/favicon.svg">
+  <link rel="stylesheet" href="src/styles/global.css">
 </head>
-<body class="w-full bg-black text-white px-12 pt-12">
+<!-- remove overflow-hidden on load (index.astro) -->
+<body class="w-full min-h-screen overflow-hidden bg-black text-white relative">
   <!-- nav -->
   <slot>
     <h2 class="text-center">Oops, no child for this slot</h2>

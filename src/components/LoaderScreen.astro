@@ -1,0 +1,11 @@
+---
+
+---
+<section class="w-full h-full flex justify-center items-center">
+  <div id="loader" class="w-20 h-20 bg-orange rounded-1"></div>
+</section>
+<script>
+  import gsap from 'gsap';
+  const loaderTween = gsap.to("#loader", {rotation: 360, duration: 2});
+  loaderTween.repeat(-1);
+</script>

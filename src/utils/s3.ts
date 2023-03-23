@@ -47,7 +47,7 @@ export const createPresignedUrlWithClient = async ( bucket: string, key: string 
   return getSignedUrl(client, command, { expiresIn: 3600 });
 };
 
-interface FolderData {
+export interface FolderData {
   folders: string[]
   [key: string]: string[]
 }
