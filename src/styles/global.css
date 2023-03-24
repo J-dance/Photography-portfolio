@@ -1,11 +1,15 @@
 /* global styles in here */
 
+body {
+  color: white;
+}
+
 body::-webkit-scrollbar {
   background-color: black;
-  width: 6px;
+  width: 8px;
 }
 
 body::-webkit-scrollbar-thumb {
   background: white;
-  border-radius: 3px;
+  border-radius: 4px;
 }

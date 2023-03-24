@@ -1,31 +1,31 @@
 ---
-import LoaderScreen from "../components/LoaderScreen.astro";
 import Page from "../layouts/Page.astro";
-import { listBucketItems, getS3Data, FolderData } from "../utils/s3";
+import { getS3Data, FolderData } from "../utils/s3";
 
-const content = await listBucketItems(import.meta.env.DB_BUCKET);	// all image data
-const bucketData: FolderData = getS3Data(content);	// format data
+const bucketData: FolderData = await getS3Data();
 ---
-<Page title="Home">
-	<div class="loader-container absolute w-full h-screen left-0 top-0 bg-white">
-		<LoaderScreen />
-	</div>
-	<main id="landing-content" class="w-full">
-		{
-			bucketData.landing.map((imgSrc) => <img class="w-full h-auto" src={imgSrc} alt="landing" />)
-		}
-	</main>
-</Page>
-<script>
-	import gsap from 'gsap';
-	let loaderTl = gsap.timeline({});
-	loaderTl
-		.to(".loader-container", {opacity: 0, duration: 1})
-		.to("body", {overflow: 'auto'}, 0)
-		.to(".loader-container", {display: 'none'}, 2)
-		.pause();
 
-	window.addEventListener('load', () => {
-		loaderTl.resume();
-	})
-</script>
+<Page title="Home">
+  <main id="landing-content" class="w-full">
+    <aside class="text-center my-5">
+      <ul class="list-none">
+        {
+          bucketData.folders.map((folder) => {
+            if (folder !== "landing") {
+              return (
+                <li id={folder}>
+                  <a href={folder}>{folder}</a>
+                </li>
+              );
+            }
+          })
+        }
+      </ul>
+    </aside>
+    {
+      bucketData.landing.map((imgSrc) => (
+        <img class="w-full h-auto" src={imgSrc} alt="landing" />
+      ))
+    }
+  </main>
+</Page>

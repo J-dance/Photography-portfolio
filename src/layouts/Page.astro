@@ -1,39 +1,65 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import LoaderScreen from "../components/LoaderScreen.astro";
 
 interface Props {
   title: string;
   description?: string;
   content?: string;
-};
+}
 
-const { 
-  title, 
+const {
+  title,
   description = "Jojo Dance photography portfolio website. Custom website build and content produced by J-Dance",
-  content = "Astro.js, TypeScript, React, Tailwind, AWS, Photography portfolio"
-  } = Astro.props;
+  content = "Astro.js, TypeScript, React, Tailwind, AWS, Photography portfolio",
+} = Astro.props;
 ---
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="application-name" content="J-dance photography portfolio with Astro.js">
-  <meta name="description" content={description}>
-  <meta name="keywords" content={content}>
-  <meta name="author" content="J-dance">
-  <meta name="generator" content={Astro.generator} />
-  <title>{title}</title>
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-  <link rel="icon" type="image/x-icon" href="/favicon.svg">
-</head>
-<!-- remove overflow-hidden on load (index.astro) -->
-<body class="w-full min-h-screen overflow-hidden bg-black text-white relative">
-  <!-- nav -->
-  <slot>
-    <h2 class="text-center">Oops, no child for this slot</h2>
-  </slot>
-  <!-- footer -->
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="application-name"
+      content="J-dance photography portfolio with Astro.js"
+    />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={content} />
+    <meta name="author" content="J-dance" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link rel="icon" type="image/x-icon" href="/favicon.svg" />
+  </head>
+  <!-- remove overflow-hidden on load (index.astro) -->
+  <body
+    class="w-full min-h-screen overflow-hidden bg-black text-white relative"
+  >
+    <Nav />
+    <div
+      class="loader-container absolute w-full h-screen left-0 top-0 bg-white"
+    >
+      <LoaderScreen />
+    </div>
+    <slot>
+      <h2 class="text-center">Oops, no child for this slot</h2>
+    </slot>
+    <!-- footer -->
+  </body>
 </html>
+<script>
+  import gsap from "gsap";
+  let loaderTl = gsap.timeline({});
+  loaderTl
+    .to(".loader-container", { opacity: 0, duration: 1 })
+    .to("body", { overflow: "auto" }, 0)
+    .to(".loader-container", { display: "none" }, 2)
+    .pause();
+
+  window.addEventListener("load", () => {
+    loaderTl.resume();
+  });
+</script>

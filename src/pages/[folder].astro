@@ -1,0 +1,32 @@
+---
+import Page from "../layouts/Page.astro";
+import { getS3Data, FolderData } from "../utils/s3";
+
+export async function getStaticPaths() {
+  const bucketData: FolderData = await getS3Data();
+
+  return bucketData.folders.map((folder) => {
+    return {
+      params: {
+        folder: folder,
+      },
+      props: {
+        data: bucketData[folder],
+      },
+    };
+  });
+}
+
+const { folder } = Astro.params;
+const { data } = Astro.props;
+---
+
+<Page title={folder}>
+  <main class="w-full flex flex-col items-center">
+    {
+      data.map((imgSrc: string) => (
+        <img class="w-1/2 h-auto my-6" src={imgSrc} alt={folder} />
+      ))
+    }
+  </main>
+</Page>
