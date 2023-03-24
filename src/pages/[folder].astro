@@ -21,7 +21,7 @@ const { folder } = Astro.params;
 const { data } = Astro.props;
 ---
 
-<Page title={folder}>
+<Page title={"J-dance" + " " + folder}>
   <main class="w-full flex flex-col items-center">
     {
       data.map((imgSrc: string) => (

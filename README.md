@@ -1,5 +1,9 @@
 # J-dance Photography Portfolio built with Astro 🧑‍🚀
 
+- <a href="photography-portfolio-one.vercel.app">host 1</a>
+- <a href="photography-portfolio-git-main-j-dance.vercel.app">host 2</a>
+- <a href="photography-portfolio-j-dance.vercel.app">host 3</a>
+
 Setup using:
 
 ```
