@@ -14,7 +14,9 @@ const bucketData: FolderData = await getS3Data();
             if (folder !== "landing") {
               return (
                 <li id={folder}>
-                  <a href={folder}>{folder}</a>
+                  <a class="font-cursive" href={folder}>
+                    {folder}
+                  </a>
                 </li>
               );
             }

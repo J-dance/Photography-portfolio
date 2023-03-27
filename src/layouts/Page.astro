@@ -52,14 +52,78 @@ const {
 </html>
 <script>
   import gsap from "gsap";
-  let loaderTl = gsap.timeline({});
-  loaderTl
-    .to(".loader-container", { opacity: 0, duration: 1 })
+
+  const loaderContainerTl = gsap.timeline();
+  loaderContainerTl
+    .to("#jd-logo", { opacity: 1, duration: 0.8 }, 0.2)
+    .to(
+      ".letter",
+      {
+        x: "0%",
+        duration: 1,
+        ease: "power1.inOut",
+      },
+      0
+    )
     .to("body", { overflow: "auto" }, 0)
-    .to(".loader-container", { display: "none" }, 2)
-    .pause();
+    .to(".loader-container", { opacity: 0, duration: 1 }, 1)
+    .to(".loader-container", { display: "none" }, 2);
+  loaderContainerTl.pause();
+
+  const endLoading = () => loaderContainerTl.play();
+
+  const loaderTl = gsap.timeline({ repeat: -1, onComplete: endLoading });
+  loaderTl
+    .to(".letter", {
+      x: "-100%",
+      duration: 0.6,
+      ease: "power3.inOut",
+      delay: 0.3,
+    })
+    .to(".letter", {
+      x: "-200%",
+      duration: 0.6,
+      ease: "power3.inOut",
+      delay: 0.3,
+    })
+    .to(".letter", {
+      x: "-300%",
+      duration: 0.6,
+      ease: "power3.inOut",
+      delay: 0.3,
+    })
+    .to(".letter", {
+      x: "-400%",
+      duration: 0.6,
+      ease: "power3.inOut",
+      delay: 0.3,
+    })
+    .to(".letter", {
+      x: "-500%",
+      duration: 0.6,
+      ease: "power3.inOut",
+      delay: 0.3,
+    })
+    .to(".letter", {
+      x: "-600%",
+      duration: 0.6,
+      ease: "power3.inOut",
+      delay: 0.3,
+    })
+    .to(".letter", {
+      x: "-700%",
+      duration: 0.6,
+      ease: "power3.inOut",
+      delay: 0.3,
+    })
+    .to(".letter", {
+      x: "0%",
+      duration: 2,
+      ease: "power1.inOut",
+      delay: 0.3,
+    });
 
   window.addEventListener("load", () => {
-    loaderTl.resume();
+    window.location.pathname !== "/" ? endLoading() : loaderTl.repeat(0);
   });
 </script>

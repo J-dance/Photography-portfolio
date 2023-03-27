@@ -1,11 +1,23 @@
 ---
-
+import FilmSection from "./FilmSection.astro";
 ---
+
 <section class="w-full h-full flex justify-center items-center">
-  <div id="loader" class="w-20 h-20 bg-orange rounded-1"></div>
+  <div class="w-28 overflow-hidden grid-flow-col auto-cols-auto grid">
+    <div id="jd-logo" class="opacity-0 w-28 h-auto letter translate-x-full">
+      <FilmSection text="JD" textSize="4xl" color="#ca6702" />
+    </div>
+    {
+      "Loading".split("").map((letter) => (
+        <div class="w-28 h-auto letter translate-x-full">
+          <FilmSection
+            id={letter}
+            text={letter}
+            textSize="4xl"
+            color="#ca6702"
+          />
+        </div>
+      ))
+    }
+  </div>
 </section>
-<script>
-  import gsap from 'gsap';
-  const loaderTween = gsap.to("#loader", {rotation: 360, duration: 2});
-  loaderTween.repeat(-1);
-</script>
